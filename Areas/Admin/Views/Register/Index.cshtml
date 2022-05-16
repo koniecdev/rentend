@@ -1,0 +1,26 @@
+﻿@model RegisterViewModel;
+@{
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <div class="login_wrapper">
+        <div class="login_container">
+            <h1>Register</h1>
+            <form method="post">
+                <input type="email" asp-for="@Model.Email">
+                <input type="text" asp-for="@Model.Username">
+                <input type="password" asp-for="@Model.Password">
+                <input type="password" asp-for="@Model.ConfirmPassword">
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

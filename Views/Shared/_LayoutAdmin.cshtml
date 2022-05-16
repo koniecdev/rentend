@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Panel - rentend.koniec.dev</title>
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
+	<link rel="stylesheet" href="~/css/admin.css" asp-append-version="true">
+	<script src="https://cdn.tiny.cloud/1/ijafnuedjctwgc80igjldqn9mv21satcousx389wymteifxc/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+	@RenderSection("Styles", required: false)
+</head>
+<body>
+	<div class="admin_container">
+		<nav>
+			<div>
+				<strong>Admin Panel</strong>
+				<p>rentend.koniec.dev</p>
+			</div>
+			<a href="/Admin/Brand/">Brands</a>
+			<a href="/Admin/Car/">Cars</a>
+        </nav>
+        <main>
+			<div class="main_section">
+				@RenderBody()
+			</div>
+		</main>
+	</div>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script>
+		$(".admin_table_row_header a").each(function () {
+			if (window.location.href.includes($(this).attr("Id"))) {
+				var x = $(this);
+				if (window.location.href.includes("DESC")) {
+					$(x).html($(x).html() + " &#9662");
+				} else {
+					$(x).html($(x).html() + " &#9652");
+				}
+			}
+		});
+	</script>
+	@RenderSection("Scripts", required: false)
+</body>
+</html>

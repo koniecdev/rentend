@@ -1,0 +1,828 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700&display=swap');
+*{
+  box-sizing: border-box;
+  outline: none;
+}
+html, body{
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: #efefef;
+}
+h1, h2, h3, h4, p{
+  margin: 0;
+}
+main{
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.table_single_row > div:nth-of-type(2) {
+    user-select: text;
+}
+.a{
+  color: #000;
+  text-decoration: none;
+}
+*{
+	user-select: text;
+}
+.admin_container {
+	display: grid;
+	grid-template-columns: 300px 1fr;
+	grid-column-gap: 4rem;
+}
+
+nav {
+	background-color: #007fff;
+	color: #fff;
+	display: grid;
+	min-height: 100vh;
+	grid-auto-rows: 100px;
+	box-shadow: 0 0 1rem #000;
+}
+
+nav a {
+	display: grid;
+	border-bottom: 1px solid #fff;
+	color: #fff;
+	align-content: center;
+	text-decoration: none;
+	font-size: 1.25rem;
+	padding-left: 2rem;
+	font-weight: 500;
+}
+
+main {
+	padding: 2rem;
+	width: max-content;
+	padding-top: .5rem;
+}
+
+header {
+	grid-column: 1/-1;
+	background-color: #181818;
+	padding: 2rem;
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	text-align: center;
+	color: #fff;
+	align-items: center;
+}
+
+header strong {
+	font-size: 1.5rem;
+}
+
+header img {
+	height: 50px;
+}
+
+form {
+	display: grid;
+	grid-template-columns: 1fr 350px;
+}
+
+form > div {
+	display: grid;
+	grid-gap: 1rem;
+}
+
+.form_left{
+	grid-template-rows: 100px 1fr;
+	padding: 2rem .5rem 2rem 2rem;
+}
+
+.form_left input{
+	font-size: 2.5rem;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 700;
+}
+
+.form_right{
+	grid-auto-rows: max-content;
+	padding: 2rem 2rem 2rem .5rem;
+}
+
+.form_tile{
+	display: grid;
+	grid-gap: .75rem;
+	background-color: #fff;
+	padding: 1rem;
+	border: 1px solid #ccc;
+	min-height: 100px;
+}
+
+input[type="text"].tiny_mce_input {
+	border: 1px solid #ccc;
+	padding: 1rem;
+}
+
+.gallery_edit_container {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 250px);
+	grid-gap: 1rem;
+}
+
+.gallery_edit_container img {
+	width: 100%;
+	height: 150px;
+	object-fit: cover;
+	object-position: center;
+}
+
+.gallery_edit_image {
+	display: grid;
+}
+
+.gallery_edit_container button {
+	background-color: #ff0000;
+	color: #fff;
+	border-radius: 0;
+	border: 0;
+	width: 100%;
+	display: block;
+	padding: 1rem 0;
+	font-weight: 700;
+}
+
+
+
+.btn_wide {
+	display: block;
+	width: 100%;
+	background-color: #007fff;
+	color: #fff;
+	font-weight: 600;
+	padding: 1rem;
+}
+
+footer {
+	height: 100px;
+	background-color: #404040;
+	color: #fff;
+	background-size: cover;
+	background-position: center 45%;
+	display: grid;
+	align-content: center;
+	padding: 0 4rem;
+	grid-template-columns: repeat(2, max-content);
+	justify-content: space-between;
+	border-top: 2px solid #f8c201;
+}
+
+footer a img {
+	width: 150px;
+	display: block;
+}
+
+.list_item {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	grid-template-rows: 50px;
+	grid-column-gap: 2rem;
+}
+
+.list_item p:first-of-type {
+	grid-row: span 2
+}
+
+.admin_container {
+	display: grid;
+	grid-template-columns: 300px 1fr;
+	grid-column-gap: 0;
+}
+
+nav {
+	background-color: #2f4050;
+	color: #fff;
+	display: grid;
+	min-height: 100vh;
+	grid-template-rows: 100px;
+	grid-auto-rows: 70px;
+}
+
+nav a {
+	display: grid;
+	color: #fff;
+	align-content: center;
+	text-decoration: none;
+	font-size: 1.25rem;
+	padding-left: 2rem;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+main {
+	width: 100%;
+	padding: 0;
+	background-color: #efefef;
+}
+
+main header {
+	gap: 1.5rem;
+	height: 100px;
+	width: 100%;
+	background-color: #fff;
+	color: #181818;
+	display: flex;
+	justify-content: space-between;
+}
+
+.tox-tinymce {
+	width: 100%;
+	height: 100% !important;
+}
+
+header {
+	grid-column: 1/-1;
+	background-color: #181818;
+	padding: 2rem;
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	text-align: center;
+	color: #fff;
+	align-items: center;
+}
+
+header strong {
+	font-size: 1.5rem;
+}
+
+header img {
+	height: 50px;
+}
+
+input[type="text"].tiny_mce_input {
+	border: 1px solid #ccc;
+	padding: 1rem;
+}
+
+.gallery_edit_container {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 250px);
+	grid-gap: 1rem;
+}
+
+.gallery_edit_container img {
+	width: 100%;
+	height: 150px;
+	object-fit: cover;
+	object-position: center;
+}
+
+.gallery_edit_image {
+	display: grid;
+}
+
+.gallery_edit_container button {
+	background-color: #ff0000;
+	color: #fff;
+	border-radius: 0;
+	border: 0;
+	width: 100%;
+	display: block;
+	padding: 1rem 0;
+	font-weight: 700;
+}
+
+.btn_wide {
+	display: block;
+	width: 100%;
+	background-color: #007fff;
+	color: #fff;
+	font-weight: 600;
+	padding: 1rem;
+}
+
+nav div {
+	background-color: #233645;
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	grid-auto-rows: max-content;
+	grid-gap: .5rem;
+}
+
+nav div p {
+	color: #24c792;
+	text-transform: uppercase;
+	font-size: 1.25rem;
+	margin: 0;
+}
+
+._btn {
+	background-color: #233645;
+	color: #fff;
+	padding: .75rem 1rem;
+	border-radius: 5px;
+	text-transform: uppercase;
+	font-weight: 600;
+	text-decoration: none;
+	font-size: 14px;
+	border: unset;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+header > div {
+	display: flex;
+	gap: 1rem;
+}
+
+input[type="search"] {
+	border: 1px solid #ccc;
+	padding: .5rem 1rem;
+	width: 250px;
+	border-radius: 5px;
+}
+
+.admin_nav_primary {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	height: 70px;
+	align-items: center;
+	padding: 0 1.25rem;
+}
+
+.admin_landing_container {
+	display: grid;
+	justify-items: center;
+	grid-auto-rows: max-content;
+	grid-gap: 4rem;
+	min-height: calc(100vh - 140px);
+	padding-top: 150px;
+}
+
+.admin_landing_container header {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.admin_landing_grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, 200px);
+	max-width: 1200px;
+	min-width: 200px;
+	grid-gap: 1.5rem;
+}
+
+footer {
+	height: 70px;
+	background-color: #fff;
+	border-top: 1px solid #ccc;
+}
+
+.admin_landing_grid a {
+	display: block;
+	text-align: center;
+	height: 50px;
+	background-color: #fff;
+	font-weight: 400;
+	font-size: 1rem;
+}
+
+.admin_nav_secondary {
+	display: grid;
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 250px;
+	height: 100vh;
+	background-color: #fff;
+	border-left: 1px solid #ccc;
+	grid-template-rows: 70px 1fr;
+}
+
+.admin_nav_secondary_content {
+	display: grid;
+}
+
+.admin_nav_secondary_content a {
+	display: flex;
+	padding-left: 1rem;
+	text-align: left;
+	align-items: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: #000;
+}
+
+.admin_landing_grid .a {
+	display: grid;
+	grid-template-rows: 1fr 50px;
+}
+
+.admin_landing_grid .a div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.admin_table_container, .admin_create {
+	min-height: calc(100vh - 100px);
+	display: grid;
+}
+
+.admin_table {
+	width: 100%;
+	height: max-content;
+	overflow: hidden;
+}
+
+.admin_table h1 {
+	padding: 1rem;
+	background-color: #efefef;
+	display: flex;
+	justify-content: space-between;
+}
+
+.admin_table_row, .admin_table_row_header {
+	display: grid;
+	background-color: #fff;
+	padding: 1rem 2rem;
+	align-items: center;
+	height: 70px;
+}
+
+.admin_table_row_header{
+	background-color: #353535;
+	color: #fff;
+}
+
+a{
+	color: #fff;
+	text-decoration: none;
+}
+
+.atr1 {
+	grid-template-columns: 1fr 245px;
+}
+
+.atr2 {
+	grid-template-columns: repeat(2, 1fr) 245px;
+}
+
+.atr3 {
+	grid-template-columns: repeat(3, 1fr) 245px;
+}
+
+.atr4 {
+	grid-template-columns: repeat(4, 1fr) 245px;
+}
+.atr5 {
+	grid-template-columns: repeat(5, 1fr) 245px;
+}
+
+.admin_table_row:nth-of-type(even) {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+.atr_buttons {
+	display: grid;
+	grid-template-columns: repeat(3, max-content);
+	grid-gap: .75rem;
+}
+
+.btn {
+	background-color: #bbb;
+	color: #fff;
+	text-decoration: none;
+	padding: .5rem 1rem;
+	border-radius: 5px;
+	font-weight: 400;
+	border: unset;
+	width: max-content;
+	font-size: 1rem;
+	font-family: 'Source Sans Pro';
+}
+
+.btn_green {
+	background-color: #2f4050;
+}
+
+.btn_green_border {
+	border: 2px solid #2f4050;
+	background-color: #fff;
+	color: #2f4050;
+}
+
+.btn_red {
+	background-color: #b71e39;
+}
+
+.create_container input[type="text"], .dateinput, textarea {
+	padding: .75rem 1rem;
+	border: 1px solid #ccc;
+}
+
+.create_container {
+	display: grid;
+	grid-gap: 1rem;
+}
+
+.create_container form {
+	display: grid;
+	grid-row-gap: 1rem;
+}
+
+select {
+	display: block;
+	width: 100%;
+	padding: .375rem .75rem;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+}
+
+.gallery_dropdown {
+	background-color: unset;
+	border: unset;
+	color: #0164c7;
+	text-align: left;
+	width: max-content;
+	padding: unset;
+}
+
+.match_container {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-gap: 1rem;
+}
+
+input[type="number"] {
+	display: block;
+	width: 100%;
+	height: calc(2.25rem + 2px);
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+}
+
+.match_first_team, .match_second_team {
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: repeat(4, max-content);
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 1rem;
+	margin-bottom: 1rem;
+}
+
+.match_second_team > div, .match_first_team > div {
+	display: grid;
+	grid-gap: .5rem;
+	grid-auto-rows: max-content;
+}
+
+.league_select {
+	width: max-content;
+	display: grid;
+	grid-gap: .5rem;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 1rem;
+}
+
+.select_grid {
+	display: grid;
+	grid-gap: .5rem;
+	padding-top: .5rem;
+}
+
+.partners_grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 220px);
+	grid-gap: 2rem;
+}
+
+.partners_grid_tile img {
+	width: 100%;
+}
+
+.partners_container {
+	padding: 2rem;
+}
+
+.partners_container, .partners_grid_tile {
+	display: grid;
+	grid-gap: 1rem;
+}
+
+.single_queue {
+	width: 1200px;
+	display: grid;
+	grid-gap: 1rem;
+}
+
+.single_match {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, 200px);
+	grid-gap: 1rem;
+	padding: 2rem;
+	background-repeat: 15px;
+	background-color: #fff;
+}
+
+.single_match_score{
+	display: grid;
+	grid-gap: 2rem;
+}
+.single_sub_left, .single_sub_right{
+	display: grid;
+	grid-gap: 1rem;
+	grid-auto-rows: max-content;
+}
+.gtc1{
+	grid-template-columns: 1fr;
+}
+.single_match_header {
+	grid-column: 1/-1;
+}
+
+.Calendar_Queue {
+	background-color: #fff;
+	color: #000;
+	text-decoration: none;
+	font-size: 1.25rem;
+	border: 1px solid #ccc;
+	padding: 1rem;
+	display: block;
+	margin: 1rem;
+}
+
+.photos_container {
+	display: grid;
+	grid-template-columns: repeat(5, 200px);
+	grid-gap: 1rem;
+}
+
+.photos_container a {
+	background-color: #ff0000;
+	color: #fff;
+	text-decoration: none;
+}
+
+.photos_container div {
+	padding: 1rem;
+	text-align: center;
+}
+
+.photos_container img {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	object-position: center;
+}
+.pd2{
+	padding: 2rem;
+}
+.partners_grid_tile {
+	background-color: #fff;
+	border-radius: 5px;
+	overflow: hidden;
+	text-align: center;
+}
+.calendar_table_container{
+	display: grid;
+	grid-gap: 1rem;
+}
+.partners_grid_tile .btn{
+	width: 100%;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	text-transform: uppercase;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	text-align: center;
+	align-content: center;
+	display: grid;
+}
+.calender_table_row{
+	display: grid;
+}
+.calendar_table_inner{
+	background-color: #fff;
+	color: #303030;
+	display: grid;
+}
+.match_to_add{
+	padding: 1rem;
+	border-bottom: 1px solid #ccc;
+	display: grid;
+	grid-template-columns: 1fr repeat(2, max-content) 300px;
+	grid-gap: 2rem;
+	align-content: center;
+}
+.match_to_add span{
+	display: grid;
+	align-content: center;
+}
+.match_search{
+	display: grid;
+	width: 300px;
+}
+.editTeamRow{
+	display: flex;
+	gap: 1rem;
+	flex-direction: row;
+}
+
+@media screen and (max-width: 1700px) {
+	.admin_table_container, .admin_create {
+		justify-content: flex-start;
+	}
+
+	.admin_landing_grid {
+		max-width: 800px;
+	}
+}
+
+
+
+
+
+
+
+
+/*
+<!-- Image Map Generated by http://www.image-map.net/ -->
+<img src="mapaglowna-nowa2022-biala.png" usemap="#image-map">
+
+<map name="image-map">
+    <area target="" alt="1" title="1" href="" coords="1483,5218,2203,3422,2512,3282,2536,3367,2497,5071,1746,5272" shape="poly">
+    <area target="" alt="2" title="2" href="" coords="1854,4281,1963,3987,1653,3367,1475,3282,1606,4118" shape="poly">
+    <area target="" alt="3" title="3" href="" coords="1475,3262,1660,3347,2388,3332,2442,3301,2256,2937,2210,2953,1900,3007" shape="poly">
+    <area target="" alt="4" title="4" href="" coords="2156,2949,2287,2941,2411,2686,2264,2470,2194,2501,2109,2709,2101,2802" shape="poly">
+    <area target="" alt="5" title="5" href="" coords="1854,786,1939,848,3238,407,3409,5,2898,5,1722,477" shape="poly">
+    <area target="" alt="6" title="6" href="" coords="2442,2664,2364,2803,2457,3097,2705,3290,2774,3306,2782,3113" shape="poly">
+    <area target="" alt="7" title="7" href="" coords="2527,3283,2550,3360,3579,4504,3672,4481,3826,3607,3509,3623,2898,3337,2829,3325" shape="poly">
+    <area target="" alt="8" title="8" href="" coords="2194,2479,2156,2556,1931,2572,1869,2332,1846,2193,1908,2162,1954,2247" shape="poly">
+    <area target="" alt="9" title="9" href="" coords="1923,2166,1970,2243,2248,2444,2295,2483,2403,2359,2395,2189,2233,2096,2040,2096" shape="poly">
+    <area target="" alt="10" title="10" href="" coords="1900,2497,1931,2582,1777,2790,1544,2922,1305,2922,1266,2875,1367,2775,1560,2705" shape="poly">
+    <area target="" alt="11" title="11" href="" coords="1869,2381,1900,2481,1568,2582,717,2326,763,2172" shape="poly">
+    <area target="" alt="13" title="13" href="" coords="2573,2170,2643,2147,2651,2023,2999,1590,2836,1575,2705,1598,2651,1961" shape="poly">
+    <area target="" alt="14" title="14" href="" coords="2040,2081,2225,2074,2233,1579,2248,1525,2248,1138,1954,868,1807,783" shape="poly">
+    <area target="" alt="15" title="15" href="" coords="2349,2577,2419,2662,2473,2623,2643,2639,2898,2623,2929,2562,3014,2345,2929,2160,2859,2167,2759,2368,2527,2461,2426,2477" shape="poly">
+    <area target="" alt="16" title="16" href="" coords="1838,2183,1900,2152,1761,1820,1235,1572,717,1309,253,1139,67,1139,5,1286,106,1402" shape="poly">
+    <area target="" alt="17" title="17" href="" coords="2473,5105,2527,5058,2697,5074,3022,5020,3532,4556,3618,4510,3656,4540,3618,4610,3618,4734,3633,4904,3509,5051,3208,5213,2960,5252,2566,5275,2310,5167" shape="poly">
+    <area target="" alt="18" title="18" href="" coords="3672,4551,3687,4512,4321,4767,5497,4844,5629,4914,5567,5169,5033,5169,4252,5146,3772,4752,3710,4690,3672,4636" shape="poly">
+    <area target="" alt="19" title="19" href="" coords="2960,2519,2929,2612,3200,2550,3571,2589,3981,2388,3819,2218,3192,2318,3084,2390" shape="poly">
+    <area target="" alt="20" title="20" href="" coords="3989,2367,3834,2220,4004,2151,4987,1710,5041,1726,5018,1896,4770,2073,4484,2259" shape="poly">
+    <area target="" alt="21" title="21" href="" coords="2403,2183,2558,2160,2666,2144,2898,2121,3068,2059,3324,2036,3556,1943,3664,2028,3486,2183,3030,2152,2751,2199,2527,2222,2426,2237" shape="poly">
+    <area target="" alt="22" title="22" href="" coords="3571,1932,3679,2017,3857,1901,4174,1855,4971,1708,5010,1661,4669,1553,3973,1584,3795,1739,3749,1801" shape="poly">
+    <area target="" alt="23" title="23" href="" coords="4816,478,4832,532,4538,633,4020,602,4089,486,4205,455,4267,432,4345,432,4414,416" shape="poly">
+    <area target="" alt="24" title="24" href="" coords="5010,1681,5018,1603,5358,1302,5412,1340,5760,1704,5791,1781,5783,1843,5838,1912,5683,1936,5559,1912,5079,1735,5025,1711" shape="poly">
+    <area target="" alt="25" title="25" href="" coords="5265,1340,5373,1271,5428,645,4909,11,4584,11,4584,119,4816,451,4847,536,4979,892,4979,1031" shape="poly">
+    <area target="" alt="26" title="26" href="" coords="5799,1796,5853,1912,6433,2121,6982,2098,7199,1990,7168,1928,6851,1781" shape="poly">
+    <area target="" alt="27" title="27" href="" coords="5814,1771,5791,1693,6688,1330,7021,1330,7036,1415,6874,1763" shape="poly">
+    <area target="" alt="28" title="28" href="" coords="6696,1314,7013,1306,7764,657,7400,525,6835,866,6503,981" shape="poly">
+    <area target="" alt="29" title="29" href="" coords="7601,1959,8730,2014,8754,1619,7632,1619" shape="poly">
+    <area target="" alt="30" title="30" href="" coords="6905,2108,7021,2093,7593,1961,7764,1969,7686,2116,7408,2317,7060,2263,6951,2216" shape="poly">
+    <area target="" alt="31" title="31" href="" coords="6828,841,6503,957,6394,880,6433,679,6673,284,6889,300,6920,462" shape="poly">
+    <area target="" alt="32" title="32" href="" coords="6379,840,6402,917,5451,1358,5381,1288,5830,901" shape="poly">
+    <area target="" alt="33" title="33" href="" coords="2898,2100,2844,2107,2674,2030,2419,1984,2388,1798,2504,1899,2620,1968,2720,1999,2829,2030,2898,2045" shape="poly">
+    <area target="" alt="35" title="35" href="" coords="2333,2128,2403,2159,2395,1749,2388,1610,2248,1540,2248,1610" shape="poly">
+    <area target="" alt="36" title="36" href="" coords="3378,3338,3463,3322,3316,3052,3084,2882,2914,2634,2859,2642,2875,2882,2983,3052" shape="poly">
+    <area target="" alt="37" title="37" href="" coords="3378,3355,3463,3355,3532,3479,4484,3448,4615,3494,4600,3610,4461,3665,4221,3680,3857,3603,3517,3595,3424,3556,3385,3471" shape="poly">
+    <area target="" alt="38" title="38" href="" coords="1583,3997,1591,4144,926,4437,841,4329,1367,3974" shape="poly">
+    <area target="" alt="39" title="39" href="" coords="825,4326,918,4450,593,4976,268,4983,253,4782,531,4620" shape="poly">
+    <area target="" alt="40" title="40" href="" coords="3687,1812,3772,1735,4004,607,4066,467,4252,413,4136,313,3819,336,3819,514,3648,545,3409,676,3285,815,3238,1055,3331,1279,3486,1534,3571,1727" shape="poly">
+</map>
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  */

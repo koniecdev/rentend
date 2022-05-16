@@ -1,0 +1,23 @@
+@model Brand;
+<header>
+	<h1>Delete car manufacturer</h1>
+	<div>
+		<a asp-action="Index" class="_btn">Go back</a>
+	</div>
+</header>
+<div class="admin_create">
+	<div class="create_container">
+		<form method="post">
+			<input type="hidden" asp-for="@Model.Id">
+			<div class="form_right">
+				<div class="form_tile">
+				    <input type="text" placeholder="Title" asp-for="@Model.Name">
+				</div>
+				<div class="atr_buttons">
+					<input type="submit" class="btn btn_green" value="Publish">
+					<a class="btn btn_red">Cancel</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
