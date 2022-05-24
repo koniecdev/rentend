@@ -1,23 +1,35 @@
-@model IEnumerable<Brand>
+@model IEnumerable<Car>
 
 <header>
-	<h1>Lista artykułów</h1>
+	<h1>List of Cars</h1>
 	<div>
-		<a asp-action="Create" class="_btn">Dodaj nowy artykuł</a>
+		<a asp-action="Create" class="_btn">Add new car</a>
 	</div>
 </header>
 <div class="admin_table_container">
 	<div class="admin_table">
 		<div class="admin_table_content">
-			<div class="admin_table_row_header atr1">
-				<a id="Title">Nazwa artykułu</a>
+			<div class="admin_table_row_header atr4">
+				<a>Brand</a>
+				<a>Car</a>
+				<a>Year</a>
+				<a>HP</a>
 				<span>Dostępne akcje</span>
 			</div>
             @foreach (var item in Model)
             {
-                <div class="admin_table_row atr1">
+                <div class="admin_table_row atr4">
                     <div class="atr_item">
-                        @item.Name
+                        @item.Brand.Name
+                    </div>
+                    <div class="atr_item">
+                        @item.Model
+                    </div>
+                    <div class="atr_item">
+                        @item.YearOfProduction
+                    </div>
+                    <div class="atr_item">
+                        @item.Horsepower
                     </div>
                     <div class="atr_buttons">
                         <a class="btn btn_green" asp-action="Update" asp-route-Id="@item.Id">Edit</a>

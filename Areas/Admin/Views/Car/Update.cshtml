@@ -1,17 +1,73 @@
-@model Brand;
+@model rentend.Models.ViewModels.CarViewModel;
 <header>
-	<h1>Delete car manufacturer</h1>
+	<h1>Edit car</h1>
 	<div>
 		<a asp-action="Index" class="_btn">Go back</a>
 	</div>
 </header>
 <div class="admin_create">
 	<div class="create_container">
-		<form method="post">
-			<input type="hidden" asp-for="@Model.Id">
+		<form method="post" enctype="multipart/form-data">
 			<div class="form_right">
+				<input type="hidden" asp-for="@Model.Car.Id">
 				<div class="form_tile">
-				    <input type="text" placeholder="Title" asp-for="@Model.Name">
+					<select asp-for="@Model.Car.BrandId" asp-items="@Model.Brands.ToSelectListItem(1)"></select>
+				</div>
+				<div class="form_tile">
+					<label>Model</label>
+				    <input  placeholder="Model" asp-for="@Model.Car.Model">
+				</div>
+				<div class="form_tile">
+					<label>Year of production</label>
+					<input  placeholder="Year of production" asp-for="@Model.Car.YearOfProduction">
+				</div>
+				<div class="form_tile">
+					<label>Engine</label>
+				    <input  placeholder="Engine" asp-for="@Model.Car.Engine">
+				</div>
+				<div class="form_tile">
+					<label>HP</label>
+				    <input  placeholder="Horsepower" asp-for="@Model.Car.Horsepower">
+				</div>
+				<div class="form_tile">
+					<label>Drive</label>
+				    <input  placeholder="Drive" asp-for="@Model.Car.Drive">
+				</div>
+				<div class="form_tile">
+					<label>Transmission</label>
+				    <input  placeholder="Transmission" asp-for="@Model.Car.Transmission">
+				</div>
+				<div class="form_tile">
+					<label>Km per 12h</label>
+				    <input  placeholder="Km per 12h" asp-for="@Model.Car.KmPerHalfDay">
+				</div>
+				<div class="form_tile">
+					<label>Km per 24h</label>
+				    <input  placeholder="Km per 24h" asp-for="@Model.Car.KmPerDay">
+				</div>
+				<div class="form_tile">
+					<label>Price per 12h</label>
+				    <input  placeholder="Price per 12h" asp-for="@Model.Car.KmPerDay">
+				</div>
+				<div class="form_tile">
+					<label>Price per 24h</label>
+				    <input  placeholder="Price per 24h" asp-for="@Model.Car.PricePerDay">
+				</div>
+				<div class="form_tile">
+					<label>Price per Weekend Day</label>
+				    <input  placeholder="Price per Weekend Day" asp-for="@Model.Car.PricePerDayWeekend">
+				</div>
+				<div class="form_tile">
+					<label>Price per Weekend</label>
+				    <input  placeholder="Price per Weekend" asp-for="@Model.Car.PricePerWeekend">
+				</div>
+				<div class="form_tile">
+					<label>Price per Week</label>
+				    <input  placeholder="Price per Week" asp-for="@Model.Car.PricePerWeek">
+				</div>
+				<div class="form_tile">
+					<label>Price per Month</label>
+				    <input  placeholder="Price per Month" asp-for="@Model.Car.PricePerMonth">
 				</div>
 				<div class="atr_buttons">
 					<input type="submit" class="btn btn_green" value="Publish">

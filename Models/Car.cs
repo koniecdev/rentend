@@ -13,7 +13,7 @@ public class Car{
     public int YearOfProduction { get; set; }
 
     [Required]
-    public double Engine { get; set; }
+    public string Engine { get; set; } = "";
 
     [Required]
     public int Horsepower { get; set; }
