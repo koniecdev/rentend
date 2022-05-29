@@ -1,4 +1,19 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿$(document).ready(function(){
+    function Month(monthNumber) {
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return months[monthNumber - 1];
+    }
+    function RangeIndex(obj, fd){
+        let d = fd.substring(5).split("-");
+        let month = d[1] + " " + Month(d[0]);
+        $(obj).parent().children("div").text(month);
+    }
+    $("input[type='date']").on("change", function(){
+        let fd = $($(this)).val();
+        RangeIndex($(this), fd);
+    });
+    $("input[type='date']").each(function(){
+        var todaydate = $(this).attr("value");
+        RangeIndex($(this), todaydate);
+    });
+});

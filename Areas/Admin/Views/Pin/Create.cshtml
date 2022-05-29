@@ -1,0 +1,22 @@
+@model rentend.Models.ViewModels.PinViewModel;
+<header>
+	<h1>Pin car to homepage</h1>
+	<div>
+		<a asp-action="Index" class="_btn">Go back</a>
+	</div>
+</header>
+<div class="admin_create">
+	<div class="create_container">
+		<form method="post" enctype="multipart/form-data">
+			<div class="form_right">
+				<div class="form_tile">
+					<select asp-for="@Model.Pin.CarId" asp-items='@Model.Cars.ToSelectListItem(0, "Model")'></select>
+				</div>
+				<div class="atr_buttons">
+					<input type="submit" class="btn btn_green" value="Pin">
+					<a class="btn btn_red">Cancel</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

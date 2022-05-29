@@ -11,5 +11,7 @@ namespace rentend.Data
 		}
 		public DbSet<Brand> Brands {get;set;}
 		public DbSet<Car> Cars {get;set;}
+		public DbSet<Pin> Pins {get;set;}
+		public DbSet<Rent> Rents {get;set;}
 	}
 }

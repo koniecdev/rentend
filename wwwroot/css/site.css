@@ -1,18 +1,130 @@
-html {
-  font-size: 14px;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
+*{
+  box-sizing: border-box;
 }
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+body{
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background-color: #f0f0f0;
 }
-
-html {
+._container{
+  display: grid;
+  height: 100vh;
+  grid-template-columns: max-content 1fr;
+}
+main{
+  width: 700px;
+  display: grid;
+  justify-content: center;
+  grid-gap: 5.5rem;
+  grid-auto-rows: max-content;
+  align-content: center;
+}
+form{
+  grid-gap: 5.5rem;
+  display: grid;
+}
+._carousel img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+header{
+  display: grid;
+  grid-gap: 12px;
+}
+.logo{
+  width: 200px;
+}
+header, form{
+  width: 450px;
+}
+.form_tile{
+  display: grid;
+  grid-gap: 12px;
+}
+.form_content{
+  display: grid;
+  grid-gap: 3rem;
+}
+.logo{
+  width: 175px;
+}
+h1{
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+}
+label{
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+input[type="text"], input[type="date"], .date_overlay{
+  width: 160px;
+  height: 75px;
+  border-radius: 15px;
+  border: unset;
+  font-size: 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  padding: 0 15px;
+}
+input[type="text"].location{
+  width: 450px;
+}
+.rent_date{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.allcars{
+  background-color: #338DE0;
+  color: #fff;
+  border: unset;
+  width: 100%;
+  height: 75px;
+  font-size: 20px;
+  padding: 0;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  border-radius: 15px;
+}
+a.allcars{
+  display: block;
+  text-decoration: none;
+  color: #909090;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+.form_btns{
+  display: grid;
+  grid-gap: 1.5rem;
+}
+.dots{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.dot{
+  width: 12px;
+  height: 12px;
+  background-color: #909090;
+  border-radius: 50%;
+}
+.date{
   position: relative;
-  min-height: 100%;
 }
-
-body {
-  margin-bottom: 60px;
+.date_overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 160px;
+  height: 75px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
 }

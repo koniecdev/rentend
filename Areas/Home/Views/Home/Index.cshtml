@@ -1,0 +1,70 @@
+@model rentend.Models.ViewModels.HomeViewModel;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rentend - Car Rental Service</title>
+    <link rel="stylesheet" href="~/lib/OwlCarousel2/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
+</head>
+<body>
+    <div class="_container">
+        <main>
+            <header>
+                <img src="~/imgs/logo.png" class="logo" alt="">
+                <h1>Car rental service</h1>
+            </header>
+            <form method="post">
+                <div class="form_content">
+                    <div class="form_tile">
+                        <label for="">What is your location?</label>
+                        <input type="text" class="location" placeholder="e.g. Warsaw">
+                    </div>
+                    <div class="form_tile">
+                        <label for="">When do you want to rent a car?</label>
+                        <div class="rent_date">
+                            <div class="date">
+                                @{
+                                    var tday = DateTime.Now.ToString("yyyy-MM-dd");
+                                }
+                                <input type="date" value="@tday">
+                                <div class="date_overlay">
+                                    
+                                </div>
+                            </div>
+                            <div class="dots">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                            <div class="date">
+                                <input type="date" value="@tday">
+                                <div class="date_overlay">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form_btns">
+                    <input type="submit" class="allcars" value="Show offers">
+                    <a href="#" class="allcars">Show all cars</a>
+                </div>
+            </form>
+        </main>
+        <div class="_carousel">
+            <div class="carousel_overlay">
+                <strong></strong>
+            </div>
+            @foreach (var item in Model.Cars)
+            {
+                <img src='@item.Item2.Replace("wwwroot/", "")'>
+            }
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/OwlCarousel2/dist/owl.carousel.min.js"></script>
+    <script src="~/js/site.js"></script>
+</body>
+</html>

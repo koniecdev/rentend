@@ -1,0 +1,30 @@
+@model IEnumerable<Pin>
+
+<header>
+	<h1>List of Pins</h1>
+	<div>
+		<a asp-action="Create" class="_btn">Add new car</a>
+	</div>
+</header>
+<div class="admin_table_container">
+	<div class="admin_table">
+		<div class="admin_table_content">
+			<div class="admin_table_row_header atr1">
+				<a>Brand</a>
+				<span>Dostępne akcje</span>
+			</div>
+            @foreach (var item in Model)
+            {
+                <div class="admin_table_row atr1">
+                    <div class="atr_item">
+                        @item.Car.Model
+                    </div>
+                    <div class="atr_buttons">
+                        <a class="btn btn_green" asp-action="Update" asp-route-Id="@item.Id">Edit</a>
+                        <a class="btn btn_red" asp-action="Delete" asp-route-Id="@item.Id">Delete</a>
+                    </div>
+                </div>
+            }
+		</div>
+	</div>
+</div>
