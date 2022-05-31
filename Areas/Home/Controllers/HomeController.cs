@@ -17,8 +17,9 @@ namespace rentend.Home.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			HomeViewModel mdel = new();
-			var pins = await _db.Pins.Include(m=>m.Car).ToListAsync();
+			HomeViewModel mdel = new(){IndexVM = new()};
+			mdel.Departaments = await _db.Departaments.ToListAsync();
+			var pins = await _db.Pins.Include(m=>m.Car).ThenInclude(m=>m.Brand).ToListAsync();
 			foreach(var pin in pins){
 				int carid = pin.CarId;
 				var file = Directory.GetFiles(Path.Combine("wwwroot/img", carid.ToString())).FirstOrDefault();

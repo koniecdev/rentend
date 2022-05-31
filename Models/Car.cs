@@ -39,4 +39,8 @@ public class Car{
     public int BrandId {get;set;}
     [ForeignKey("BrandId")]
     public virtual Brand Brand {get;set;}
+
+    public int? DepartamentId {get;set;}
+    [ForeignKey("DepartamentId")]
+    public virtual Departament Departament {get;set;}
 }

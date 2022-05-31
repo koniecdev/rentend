@@ -19,7 +19,9 @@
                 <div class="form_content">
                     <div class="form_tile">
                         <label for="">What is your location?</label>
-                        <input type="text" class="location" placeholder="e.g. Warsaw">
+                        <div class="loc">
+                            <select asp-for="@Model.IndexVM.DepartamentId" asp-items='@Model.Departaments.ToSelectListItem(1, "City")'></select>
+                        </div>
                     </div>
                     <div class="form_tile">
                         <label for="">When do you want to rent a car?</label>
@@ -28,7 +30,7 @@
                                 @{
                                     var tday = DateTime.Now.ToString("yyyy-MM-dd");
                                 }
-                                <input type="date" value="@tday">
+                                <input type="date" asp-for="@Model.IndexVM.RentSince" value="@tday">
                                 <div class="date_overlay">
                                     
                                 </div>
@@ -39,7 +41,7 @@
                                 <div class="dot"></div>
                             </div>
                             <div class="date">
-                                <input type="date" value="@tday">
+                                <input type="date" asp-for="@Model.IndexVM.RentTo" value="@tday">
                                 <div class="date_overlay">
                                     
                                 </div>
@@ -57,10 +59,24 @@
             <div class="carousel_overlay">
                 <strong></strong>
             </div>
+            <div class="owl-carousel owl-theme">
             @foreach (var item in Model.Cars)
             {
-                <img src='@item.Item2.Replace("wwwroot/", "")'>
+                <div style="position: relative">
+                    <img src='@item.Item2.Replace("wwwroot/", "")'>
+                    <div class="slider_item_overlay">
+                        <div class="brand_logo">
+                            <img src='/imgs/brands/@String.Concat(item.Item1.Brand.Name, ".png")'>
+                        </div>
+                        <div class="sio_inner">
+                            <p>@item.Item1.Brand.Name @item.Item1.Model</p>
+                            <p>Available now.</p>
+                            <a asp-action="Car" asp-route-Id="@item.Item1.Id">Check rental details.</a>
+                        </div>
+                    </div>
+                </div>
             }
+            </div>
         </div>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

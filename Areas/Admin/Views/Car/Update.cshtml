@@ -11,7 +11,15 @@
 			<div class="form_right">
 				<input type="hidden" asp-for="@Model.Car.Id">
 				<div class="form_tile">
-					<select asp-for="@Model.Car.BrandId" asp-items="@Model.Brands.ToSelectListItem(1,String.Empty)"></select>
+					<select asp-for="@Model.Car.BrandId" asp-items="@Model.Brands.ToSelectListItem(1, String.Empty)"></select>
+				</div>
+				<div class="form_tile">
+					<label>Image</label>
+				    <input type="file" placeholder="Model" name="file">
+				</div>
+				<div class="form_tile">
+					<label>Images</label>
+				    <input type="file" multiple placeholder="Model" name="files">
 				</div>
 				<div class="form_tile">
 					<label>Model</label>

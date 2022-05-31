@@ -101,6 +101,27 @@ public class CarController :Controller
                 fromDb.Transmission = _car.Car.Transmission;
                 fromDb.YearOfProduction = _car.Car.YearOfProduction;
                 await _db.SaveChangesAsync();
+                string pth = Path.Combine("wwwroot/img", fromDb.Id.ToString());
+                if(!Directory.Exists(pth))
+                {
+                    Directory.CreateDirectory(pth);
+                }
+                var pic = Request.Form.Files.FirstOrDefault(m=>m.Name == "file");
+                if(pic != null)
+				{
+                    var existinFiles = Directory.GetFiles(pth);
+                    if(existinFiles.Count() > 0)
+                    {
+                        foreach(var existin in existinFiles){
+                            System.IO.File.Delete(existin);
+                        }
+                    }
+                    string pth2 = Path.Combine(pth, pic.FileName);
+                    using (FileStream fileStream = new(pth2, FileMode.Create))
+					{
+                        await pic.CopyToAsync(fileStream);
+					}
+				}
                 return RedirectToAction(nameof(Index));
 			}
         }
