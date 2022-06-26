@@ -13,6 +13,6 @@ namespace rentend.Data
 		public DbSet<Car> Cars {get;set;}
 		public DbSet<Pin> Pins {get;set;}
 		public DbSet<Rent> Rents {get;set;}
-		public DbSet<Departament> Departaments {get;set;}
+		public DbSet<Department> Departments {get;set;}
 	}
 }

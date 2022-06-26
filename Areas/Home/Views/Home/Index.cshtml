@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rentend - Car Rental Service</title>
     <link rel="stylesheet" href="~/lib/OwlCarousel2/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/global.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
 </head>
 <body>
@@ -20,7 +21,7 @@
                     <div class="form_tile">
                         <label for="">What is your location?</label>
                         <div class="loc">
-                            <select asp-for="@Model.IndexVM.DepartamentId" asp-items='@Model.Departaments.ToSelectListItem(1, "City")'></select>
+                            <select asp-for="@Model.IndexVM.DepartmentId" asp-items='@Model.Departments.ToSelectListItem(1, "City")'></select>
                         </div>
                     </div>
                     <div class="form_tile">
@@ -51,7 +52,7 @@
                 </div>
                 <div class="form_btns">
                     <input type="submit" class="allcars" value="Show offers">
-                    <a href="#" class="allcars">Show all cars</a>
+                    <a href="Offer" class="allcars">Show all cars</a>
                 </div>
             </form>
         </main>

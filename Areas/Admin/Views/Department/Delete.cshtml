@@ -1,6 +1,6 @@
-@model Brand;
+@model Department;
 <header>
-	<h1>Delete car manufacturer</h1>
+	<h1>Update car manufacturer</h1>
 	<div>
 		<a asp-action="Index" class="_btn">Go back</a>
 	</div>
@@ -11,11 +11,11 @@
 			<input type="hidden" asp-for="@Model.Id">
 			<div class="form_right">
 				<div class="form_tile">
-				    <input type="text" placeholder="Title" asp-for="@Model.Name">
+				    <input type="text" placeholder="Title" asp-for="@Model.City" disabled>
 				</div>
 				<div class="atr_buttons">
-					<input type="submit" class="btn btn_green" value="Publish">
-					<a class="btn btn_red">Cancel</a>
+					<input type="submit" class="btn btn_red" value="Delete">
+					<a class="btn">Cancel</a>
 				</div>
 			</div>
 		</form>

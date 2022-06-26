@@ -1,6 +1,6 @@
 ﻿namespace rentend.Admin.Controllers;
 
-[Area("Admin")]
+[Area("Home")]
 public class LoginController : Controller
 {
 	private readonly UserManager<IdentityUser> _userManager;

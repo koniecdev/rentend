@@ -1,86 +1,131 @@
+using Newtonsoft.Json;
 using rentend.Data;
+using System.Text;
+
 namespace rentend.Admin.Controllers;
 
 [Area("Admin")]
 public class BrandController :Controller
 {
-    private readonly ApplicationDbContext _db;
     [BindProperty]
     public Brand brand {get;set;}
-    public BrandController(ApplicationDbContext db)
+    public BrandController()
     {
-        _db = db;
         brand = new();
     }
     public async Task<IActionResult> Index()
     {
-        List<Brand> brands = await _db.Brands.ToListAsync();
-        return View(brands);
+        List<Brand> list = new();
+        using (var httpClient = new HttpClient())
+        {
+            using (var response = await httpClient.GetAsync("https://api.rentend.koniec.dev/api/Brands"))
+            {
+                if(response.StatusCode == System.Net.HttpStatusCode.OK)
+				{
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<Brand>>(apiResponse);
+				}
+				else
+				{
+                    ViewBag.StatusCode = response.StatusCode;
+				}
+            }
+        }
+        return View(list);
     }
+
     public IActionResult Create()
-    {
+	{
         return View(brand);
-    }
+	}
+
     [HttpPost, ActionName("Create")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreatePost()
-    {
-        if(ModelState.IsValid){
-            _db.Brands.Add(brand);
-            await _db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        TempData["error"] = "Please ensure provided data are valid.";
+	{
+        using(HttpClient httpClient = new())
+		{
+            StringContent content = new(JsonConvert.SerializeObject(brand), Encoding.UTF8, "application/json");
+            using (var response = await httpClient.PostAsync("https://api.rentend.koniec.dev/api/Brands", content))
+			{
+                if(response.StatusCode == System.Net.HttpStatusCode.Created)
+				{
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    brand = JsonConvert.DeserializeObject<Brand>(apiResponse);
+				}
+			}
+		}
+        return RedirectToAction(nameof(Index));
+	}
+    public async Task<IActionResult> Update(int id)
+	{
+        using(HttpClient httpClient = new())
+		{
+            using(var response = await httpClient.GetAsync($"https://api.rentend.koniec.dev/api/Brands/{id}"))
+			{
+                if(response.StatusCode == System.Net.HttpStatusCode.OK)
+				{
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    brand = JsonConvert.DeserializeObject<Brand>(apiResponse);
+				}
+				else
+				{
+                    return RedirectToAction(nameof(Index));
+				}
+			}
+		}
         return View(brand);
-    }
-    public async Task<IActionResult> Update(int? id)
-    {
-        if(id != null){
-            var x = await _db.Brands.FirstOrDefaultAsync(m=>m.Id.Equals(id));
-            if(x != null){
-                brand = x;
-                return View(brand);
+	}
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Update()
+	{
+        using (HttpClient httpClient = new())
+        {
+            StringContent content = new(JsonConvert.SerializeObject(brand), Encoding.UTF8, "application/json");
+            using (var response = await httpClient.PatchAsync($"https://api.rentend.koniec.dev/api/Brands/{brand.Id}", content))
+            {
+                if (response.StatusCode != System.Net.HttpStatusCode.NoContent)
+                {
+                    return View(brand);
+                }
             }
         }
         return RedirectToAction(nameof(Index));
     }
-    [HttpPost, ActionName("Update")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdatePost()
+    public async Task<IActionResult> Delete(int id)
     {
-        if(ModelState.IsValid){
-            var fromDb = await _db.Brands.FirstOrDefaultAsync(m=>m.Id.Equals(brand.Id));
-            if(fromDb != null){
-                fromDb.Name = brand.Name;
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+        using (HttpClient httpClient = new())
+        {
+            using (var response = await httpClient.GetAsync($"https://api.rentend.koniec.dev/api/Brands/{id}"))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    brand = JsonConvert.DeserializeObject<Brand>(apiResponse);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
         }
-        TempData["error"] = "Please ensure provided data are valid.";
         return View(brand);
     }
-    public async Task<IActionResult> Delete(int? id)
-    {
-        if(id != null){
-            var x = await _db.Brands.FirstOrDefaultAsync(m=>m.Id.Equals(id));
-            if(x != null){
-                brand = x;
-                return View(brand);
-            }
-        }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete()
+	{
+        using (HttpClient httpClient = new())
+		{
+            using (var response = await httpClient.DeleteAsync($"https://api.rentend.koniec.dev/api/Brands/{brand.Id}"))
+			{
+                if(response.StatusCode != System.Net.HttpStatusCode.NoContent)
+				{
+                    return View(brand);
+				}
+			}
+		}
         return RedirectToAction(nameof(Index));
-    }
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeletePost()
-    {
-        var fromDb = await _db.Brands.FirstOrDefaultAsync(m=>m.Id.Equals(brand.Id));
-        if(fromDb != null){
-            _db.Remove(fromDb);
-            await _db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        TempData["error"] = "Please ensure provided data are valid.";
-        return View(brand);
-    }
+	}
 }

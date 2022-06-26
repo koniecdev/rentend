@@ -1,6 +1,6 @@
-@model Brand;
+@model rentend.Models.ViewModels.PinViewModel;
 <header>
-	<h1>Delete car manufacturer</h1>
+	<h1>Update pin</h1>
 	<div>
 		<a asp-action="Index" class="_btn">Go back</a>
 	</div>
@@ -8,13 +8,13 @@
 <div class="admin_create">
 	<div class="create_container">
 		<form method="post">
-			<input type="hidden" asp-for="@Model.Id">
+			<input type="hidden" asp-for="@Model.pin.Id">
 			<div class="form_right">
 				<div class="form_tile">
-				    <input type="text" placeholder="Title" asp-for="@Model.Name">
+					<select asp-for="@Model.pin.CarId" asp-items='@Model.Cars.ToSelectListItem(1, "Model")'></select>
 				</div>
 				<div class="atr_buttons">
-					<input type="submit" class="btn btn_green" value="Publish">
+					<input type="submit" class="btn btn_green" value="Submit">
 					<a class="btn btn_red">Cancel</a>
 				</div>
 			</div>

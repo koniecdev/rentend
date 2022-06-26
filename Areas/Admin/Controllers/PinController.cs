@@ -1,82 +1,172 @@
+using Newtonsoft.Json;
 using rentend.Data;
 using rentend.Models.ViewModels;
+using System.Text;
 
 namespace rentend.Admin.Controllers;
 
 [Area("Admin")]
 public class PinController :Controller
 {
-    private readonly ApplicationDbContext _db;
     [BindProperty]
     public PinViewModel _pin {get;set;}
-    public PinController(ApplicationDbContext db)
+    public PinController()
     {
-        _db = db;
         _pin = new();
     }
     public async Task<IActionResult> Index()
     {
-        List<Pin> pins = await _db.Pins.Include(m=>m.Car).ToListAsync();
-        return View(pins);
-    }
-    public IActionResult Create()
-    {
-        _pin = new()
+        List<Pin> list = new();
+        using (var httpClient = new HttpClient())
         {
-            Cars = _db.Cars.ToList(),
-            Pin = new()
-        };
+            using (var response = await httpClient.GetAsync("https://api.rentend.koniec.dev/api/Pins"))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<Pin>>(apiResponse);
+                }
+                else
+                {
+                    ViewBag.StatusCode = response.StatusCode;
+                }
+            }
+        }
+        return View(list);
+    }
+
+    public async Task<IActionResult> Create()
+    {
+        using (HttpClient httpClient = new())
+		{
+            using (var response = await httpClient.GetAsync("https://api.rentend.koniec.dev/api/Cars"))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    _pin.Cars = JsonConvert.DeserializeObject<List<Car>>(apiResponse);
+                }
+                else
+                {
+                    ViewBag.StatusCode = response.StatusCode;
+                }
+            }
+        }
         return View(_pin);
     }
+
     [HttpPost, ActionName("Create")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreatePost()
     {
-        _db.Pins.Add(_pin.Pin);
-        await _db.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
-    public async Task<IActionResult> Update(int? Id)
-    {
-        if(Id != null)
-		{
-            _pin.Cars = await _db.Cars.ToListAsync();
-		    _pin.Pin = await _db.Pins.FirstOrDefaultAsync(m=>m.Id.Equals(Id));
-            if(_pin.Pin != null)
-			{
-		        return View(_pin);
-			}
-        }
-        return RedirectToAction(nameof(Index));
-    }
-    [HttpPost, ActionName("Update")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdatePost()
-    {
-        var fromDb = await _db.Pins.FirstOrDefaultAsync(m=>m.Id == _pin.Pin.Id);
-        fromDb.CarId = _pin.Pin.CarId;
-        await _db.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
-    public async Task<IActionResult> Delete(int? Id)
-    {
-        if (Id != null)
+        using (HttpClient httpClient = new())
         {
-            _pin.Pin = await _db.Pins.FirstOrDefaultAsync(m => m.Id.Equals(Id));
-            if (_pin.Pin != null)
+            using (var response = await httpClient.GetAsync("https://api.rentend.koniec.dev/api/Cars"))
             {
-                return View(_pin);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    _pin.Cars = JsonConvert.DeserializeObject<List<Car>>(apiResponse);
+                }
+                else
+                {
+                    ViewBag.StatusCode = response.StatusCode;
+                }
+            }
+
+            StringContent content = new(JsonConvert.SerializeObject(_pin.pin), Encoding.UTF8, "application/json");
+            using (var response = await httpClient.PostAsync("https://api.rentend.koniec.dev/api/Pins", content))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    _pin.pin = JsonConvert.DeserializeObject<Pin>(apiResponse);
+                }
             }
         }
         return RedirectToAction(nameof(Index));
     }
-
-    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> Update(int id)
+    {
+        using (HttpClient httpClient = new())
+        {
+            using (var response = await httpClient.GetAsync("https://api.rentend.koniec.dev/api/Cars"))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    _pin.Cars = JsonConvert.DeserializeObject<List<Car>>(apiResponse);
+                }
+                else
+                {
+                    ViewBag.StatusCode = response.StatusCode;
+                }
+            }
+            using (var response = await httpClient.GetAsync($"https://api.rentend.koniec.dev/api/Pins/{id}"))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    _pin.pin = JsonConvert.DeserializeObject<Pin>(apiResponse);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+        }
+        return View(_pin);
+    }
+    [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeletePost()
-	{
-        _db.Pins.Remove(_pin.Pin);
-        await _db.SaveChangesAsync();
+    public async Task<IActionResult> Update()
+    {
+        using (HttpClient httpClient = new())
+        {
+            StringContent content = new(JsonConvert.SerializeObject(_pin.pin), Encoding.UTF8, "application/json");
+            using (var response = await httpClient.PatchAsync($"https://api.rentend.koniec.dev/api/Pins/{_pin.pin.Id}", content))
+            {
+                if (response.StatusCode != System.Net.HttpStatusCode.NoContent)
+                {
+                    return View(_pin);
+                }
+            }
+        }
         return RedirectToAction(nameof(Index));
-	}
+    }
+    public async Task<IActionResult> Delete(int id)
+    {
+        using (HttpClient httpClient = new())
+        {
+            using (var response = await httpClient.GetAsync($"https://api.rentend.koniec.dev/api/Pins/{id}"))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    _pin.pin = JsonConvert.DeserializeObject<Pin>(apiResponse);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+        }
+        return View(_pin);
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete()
+    {
+        using (HttpClient httpClient = new())
+        {
+            using (var response = await httpClient.DeleteAsync($"https://api.rentend.koniec.dev/api/Pins/{_pin.pin.Id}"))
+            {
+                if (response.StatusCode != System.Net.HttpStatusCode.NoContent)
+                {
+                    return View(_pin);
+                }
+            }
+        }
+        return RedirectToAction(nameof(Index));
+    }
 }

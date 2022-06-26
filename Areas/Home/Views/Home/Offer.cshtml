@@ -1,0 +1,17 @@
+@model rentend.Models.ViewModels.HomeViewModel;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rentend - Car Rental Service</title>
+    <link rel="stylesheet" href="~/lib/OwlCarousel2/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
+</head>
+<body>
+    @foreach (var item in Model.Cars)
+    {
+        @item.Item1.Model
+    }
+</body>
+</html>

@@ -11,7 +11,10 @@
 			<div class="form_right">
 				<input type="hidden" asp-for="@Model.Car.Id">
 				<div class="form_tile">
-					<select asp-for="@Model.Car.BrandId" asp-items="@Model.Brands.ToSelectListItem(1, String.Empty)"></select>
+					<select asp-for="@Model.Car.BrandId" asp-items='@Model.Brands.ToSelectListItem(1, "Name")'></select>
+				</div>
+				<div class="form_tile">
+					<select asp-for="@Model.Car.DepartamentId" asp-items='@Model.Departments.ToSelectListItem(1, "City")'></select>
 				</div>
 				<div class="form_tile">
 					<label>Image</label>

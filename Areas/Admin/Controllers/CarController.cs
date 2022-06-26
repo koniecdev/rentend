@@ -1,31 +1,69 @@
+using Newtonsoft.Json;
 using rentend.Data;
 using rentend.Models.ViewModels;
+using System.Text;
 
 namespace rentend.Admin.Controllers;
 
 [Area("Admin")]
 public class CarController :Controller
 {
-    private readonly ApplicationDbContext _db;
     [BindProperty]
     public CarViewModel _car {get;set;}
-    public CarController(ApplicationDbContext db)
+    public CarController()
     {
-        _db = db;
         _car = new();
     }
     public async Task<IActionResult> Index()
     {
-        List<Car> cars = await _db.Cars.Include(m=>m.Brand).ToListAsync();
-        return View(cars);
-    }
-    public IActionResult Create()
-    {
-        _car = new()
+        List<Car> list = new();
+        using (var httpClient = new HttpClient())
         {
-            Brands = _db.Brands.ToList(),
-            Car = new()
-        };
+            using (var response = await httpClient.GetAsync("https://api.rentend.koniec.dev/api/Cars"))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<Car>>(apiResponse);
+                }
+                else
+                {
+                    ViewBag.StatusCode = response.StatusCode;
+                }
+            }
+        }
+        return View(list);
+    }
+    public async Task<IActionResult> Create()
+    {
+        _car = new();
+        using (var httpClient = new HttpClient())
+        {
+            using (var response = await httpClient.GetAsync("https://api.rentend.koniec.dev/api/Brands"))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    _car.Brands = JsonConvert.DeserializeObject<List<Brand>>(apiResponse);
+                }
+                else
+                {
+                    ViewBag.StatusCode = response.StatusCode;
+                }
+            }
+            using (var response = await httpClient.GetAsync("https://api.rentend.koniec.dev/api/Departments"))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    _car.Departments = JsonConvert.DeserializeObject<List<Department>>(apiResponse);
+                }
+                else
+                {
+                    ViewBag.StatusCode = response.StatusCode;
+                }
+            }
+        }
         return View(_car);
     }
     [HttpPost, ActionName("Create")]
@@ -34,9 +72,24 @@ public class CarController :Controller
     {
         if(_car.Car.Model != null && _car.Car.Engine != null)
 		{
-            _db.Cars.Add(_car.Car);
-            await _db.SaveChangesAsync();
-            if(_car.Car.Id != 0)
+            using (var httpClient = new HttpClient())
+            {
+                StringContent content = new(JsonConvert.SerializeObject(_car.Car), Encoding.UTF8, "application/json");
+                using (var response = await httpClient.PostAsync("https://api.rentend.koniec.dev/api/Cars", content))
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        _car.Car = JsonConvert.DeserializeObject<Car>(apiResponse);
+                    }
+                    else
+                    {
+                        ViewBag.StatusCode = response.StatusCode;
+                    }
+                }
+            }
+
+            if (_car.Car.Id != 0)
 			{
                 string pth = Path.Combine("wwwroot/img", _car.Car.Id.ToString());
                 Directory.CreateDirectory(pth);
@@ -65,13 +118,50 @@ public class CarController :Controller
         TempData["error"] = "Please ensure provided data are valid.";
         return View(_car);
     }
-    public async Task<IActionResult> Update(int? Id)
+    public async Task<IActionResult> Update(int Id)
     {
-        if(Id != null)
+        if(Id > 0)
 		{
-            _car.Brands = await _db.Brands.ToListAsync();
-		    _car.Car = await _db.Cars.FirstOrDefaultAsync(m=>m.Id.Equals(Id));
-            if(_car.Car != null)
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://api.rentend.koniec.dev/api/Brands"))
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        _car.Brands = JsonConvert.DeserializeObject<List<Brand>>(apiResponse);
+                    }
+                    else
+                    {
+                        ViewBag.StatusCode = response.StatusCode;
+                    }
+                }
+                using (var response = await httpClient.GetAsync("https://api.rentend.koniec.dev/api/Departments"))
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        _car.Departments = JsonConvert.DeserializeObject<List<Department>>(apiResponse);
+                    }
+                    else
+                    {
+                        ViewBag.StatusCode = response.StatusCode;
+                    }
+                }
+                using (var response = await httpClient.GetAsync($"https://api.rentend.koniec.dev/api/Cars/{Id}"))
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        _car.Car = JsonConvert.DeserializeObject<Car>(apiResponse);
+                    }
+                    else
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+            }
+            if (_car.Car != null)
 			{
 		        return View(_car);
 			}
@@ -82,71 +172,97 @@ public class CarController :Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> UpdatePost()
     {
-        if (_car.Car.Model != null && _car.Car.Engine != null)
+        using (HttpClient httpClient = new())
         {
-            var fromDb = await _db.Cars.FirstOrDefaultAsync(m => m.Id.Equals(_car.Car.Id));
-            if (fromDb != null)
-			{
-                fromDb.PricePerDayWeekend = _car.Car.PricePerDayWeekend;
-                fromDb.PricePerDay = _car.Car.PricePerDay;
-                fromDb.PricePerWeekend = _car.Car.PricePerWeekend;
-                fromDb.PricePerWeek = _car.Car.PricePerWeek;
-                fromDb.PricePerDayWeekend= _car.Car.PricePerDayWeekend;
-                fromDb.PricePerMonth = _car.Car.PricePerMonth;
-                fromDb.BrandId = _car.Car.BrandId;
-                fromDb.Drive = _car.Car.Drive;
-                fromDb.Engine = _car.Car.Engine;
-                fromDb.Model = _car.Car.Model;
-                fromDb.Horsepower = _car.Car.Horsepower;
-                fromDb.Transmission = _car.Car.Transmission;
-                fromDb.YearOfProduction = _car.Car.YearOfProduction;
-                await _db.SaveChangesAsync();
-                string pth = Path.Combine("wwwroot/img", fromDb.Id.ToString());
-                if(!Directory.Exists(pth))
-                {
-                    Directory.CreateDirectory(pth);
-                }
-                var pic = Request.Form.Files.FirstOrDefault(m=>m.Name == "file");
-                if(pic != null)
-				{
-                    var existinFiles = Directory.GetFiles(pth);
-                    if(existinFiles.Count() > 0)
-                    {
-                        foreach(var existin in existinFiles){
-                            System.IO.File.Delete(existin);
-                        }
-                    }
-                    string pth2 = Path.Combine(pth, pic.FileName);
-                    using (FileStream fileStream = new(pth2, FileMode.Create))
-					{
-                        await pic.CopyToAsync(fileStream);
-					}
-				}
-                return RedirectToAction(nameof(Index));
-			}
-        }
-        TempData["error"] = "Please ensure provided data are valid.";
-        return View(_car);
-    }
-    public async Task<IActionResult> Delete(int? Id)
-    {
-        if (Id != null)
-        {
-            _car.Car = await _db.Cars.FirstOrDefaultAsync(m => m.Id.Equals(Id));
-            if (_car.Car != null)
+            StringContent content = new(JsonConvert.SerializeObject(_car.Car), Encoding.UTF8, "application/json");
+            using (var response = await httpClient.PatchAsync($"https://api.rentend.koniec.dev/api/Cars/{_car.Car.Id}", content))
             {
-                return View(_car);
+                if (response.StatusCode != System.Net.HttpStatusCode.NoContent)
+                {
+                    return View(_car);
+                }
+            }
+        }
+        string pth = Path.Combine("wwwroot/img", _car.Car.Id.ToString());
+        if (!Directory.Exists(pth))
+        {
+            Directory.CreateDirectory(pth);
+        }
+        var pic = Request.Form.Files.FirstOrDefault(m => m.Name == "file");
+        if (pic != null)
+        {
+            var existinFiles = Directory.GetFiles(pth);
+            if (existinFiles.Count() > 0)
+            {
+                foreach (var existin in existinFiles)
+                {
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    System.IO.File.Delete(existin);
+                }
+            }
+            string pth2 = Path.Combine(pth, pic.FileName);
+            using (FileStream fileStream = new(pth2, FileMode.Create))
+            {
+                await pic.CopyToAsync(fileStream);
+            }
+        }
+        pth = Path.Combine(pth, "gallery");
+		if (!Directory.Exists(pth))
+		{
+            Directory.CreateDirectory(pth);
+		}
+        foreach (var pics in Request.Form.Files.Where(m => m.Name == "files"))
+        {
+            string pth2 = Path.Combine(pth, pics.FileName);
+            using (FileStream fileStream = new(pth2, FileMode.Create))
+            {
+                await pics.CopyToAsync(fileStream);
             }
         }
         return RedirectToAction(nameof(Index));
+    }
+    public async Task<IActionResult> Delete(int? Id)
+    {
+        using (HttpClient httpClient = new())
+        {
+            using (var response = await httpClient.GetAsync($"https://api.rentend.koniec.dev/api/Cars/{Id}"))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    _car.Car = JsonConvert.DeserializeObject<Car>(apiResponse);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+        }
+        return View(_car);
     }
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeletePost()
 	{
-        _db.Cars.Remove(_car.Car);
-        await _db.SaveChangesAsync();
+        using (HttpClient httpClient = new())
+        {
+            using (var response = await httpClient.DeleteAsync($"https://api.rentend.koniec.dev/api/Cars/{_car.Car.Id}"))
+            {
+                if (response.StatusCode != System.Net.HttpStatusCode.NoContent)
+                {
+                    return View(_car);
+                }
+            }
+        }
+        string pth = Path.Combine("wwwroot/img", _car.Car.Id.ToString());
+        if (Directory.Exists(pth))
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            Directory.Delete(pth, true);
+        }
         return RedirectToAction(nameof(Index));
-	}
+    }
 }
