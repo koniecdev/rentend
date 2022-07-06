@@ -1,0 +1,26 @@
+@model List<Tuple<Car, string>>;
+<div class="__container">
+    <div class="of_wrapper">
+        <h2>Found @Model.Count vehicles:</h2>
+        <div class="vehicles_grid">
+            @foreach (var item in Model.OrderBy(m=>m.Item1.PricePerDay))
+            {
+                <div class="vehicle_tile">
+                    <img src='@item.Item2.Replace("wwwroot", "")'>
+                    <div class="vehicle_tile_description">
+                        <h3>@item.Item1.Model</h3>
+                        <p>
+                            @item.Item1.Engine
+                            <br>@item.Item1.Horsepower HP
+                        </p>
+                    </div>
+                    <div class="vehicle_tile_price">
+                        @{var price = String.Concat(item.Item1.PricePerDay, "zł/day");}
+                        <strong>@price</strong>
+                        <a href="Car/@item.Item1.Id">Rent this car</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

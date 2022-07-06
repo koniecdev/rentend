@@ -191,21 +191,27 @@ public class CarController :Controller
         var pic = Request.Form.Files.FirstOrDefault(m => m.Name == "file");
         if (pic != null)
         {
-            var existinFiles = Directory.GetFiles(pth);
-            if (existinFiles.Count() > 0)
-            {
-                foreach (var existin in existinFiles)
+			try
+			{
+                var existinFiles = Directory.GetFiles(pth);
+                if (existinFiles.Count() > 0)
                 {
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    System.IO.File.Delete(existin);
+                    foreach (var existin in existinFiles)
+                    {
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
+                        System.IO.File.Delete(existin);
+                    }
                 }
-            }
-            string pth2 = Path.Combine(pth, pic.FileName);
-            using (FileStream fileStream = new(pth2, FileMode.Create))
-            {
-                await pic.CopyToAsync(fileStream);
-            }
+                string pth2 = Path.Combine(pth, pic.FileName);
+                using (FileStream fileStream = new(pth2, FileMode.Create))
+                {
+                    await pic.CopyToAsync(fileStream);
+                }
+			}
+			catch (Exception)
+			{
+			}
         }
         pth = Path.Combine(pth, "gallery");
 		if (!Directory.Exists(pth))

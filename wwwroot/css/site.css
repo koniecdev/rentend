@@ -2,7 +2,7 @@
 ._container{
   display: grid;
   height: 100vh;
-  grid-template-columns: 700px 100%;
+  grid-template-columns: 700px 1fr;
 }
 main{
   width: 700px;
@@ -216,4 +216,75 @@ input[type="submit"]{
 .brand_logo{
   display: grid;
   align-items: center;
+}
+.__container{
+  background-color: #fff;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-gap: 1.5rem;
+  align-content: center;
+ }
+ .of_wrapper{
+   width: 100%;
+   padding: 4rem 8rem;
+   max-height: inherit;
+   overflow-y: scroll;
+   display: grid;
+   grid-gap: 2rem;
+ }
+.vehicles_grid{
+  display: grid;
+  grid-gap: 1.5rem;
+}
+.vehicle_tile{
+  display: grid;
+  background-color: #F0F0F0;
+  grid-gap: 3rem;
+  align-items: center;
+  grid-template-columns: max-content 1fr 180px;
+  padding-right: 3rem;
+  height: 180px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.vehicle_tile img{
+  height: 100%;
+  width: 300px;
+  object-fit: cover;
+}
+h2, h3, p{
+  margin: 0;
+}
+h3{
+  font-weight: 700;
+  font-size: 24px;
+}
+h3{
+  margin-bottom: 8px;;
+}
+.vehicle_tile p{
+  font-weight: 700;
+  font-size: 24px;
+  color: #909090;
+}
+.vehicle_tile_price{
+  display: grid;
+  grid-gap: 8px;
+}
+.vehicle_tile_price strong{
+  font-weight: 700;
+  font-size: 32px;
+  text-align: center;
+}
+.vehicle_tile_price a{
+  display: grid;
+  background: #338DE0;
+  border-radius: 15px;
+  text-align: center;
+  height: 40px;
+  color: #fff;
+  align-content: center;
+  text-decoration: none;
+  color: #fff;
 }

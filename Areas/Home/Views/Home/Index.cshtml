@@ -1,87 +1,25 @@
 @model rentend.Models.ViewModels.HomeViewModel;
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rentend - Car Rental Service</title>
-    <link rel="stylesheet" href="~/lib/OwlCarousel2/dist/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/css/global.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
-</head>
-<body>
-    <div class="_container">
-        <main>
-            <header>
-                <img src="~/imgs/logo.png" class="logo" alt="">
-                <h1>Car rental service</h1>
-            </header>
-            <form method="post">
-                <div class="form_content">
-                    <div class="form_tile">
-                        <label for="">What is your location?</label>
-                        <div class="loc">
-                            <select asp-for="@Model.IndexVM.DepartmentId" asp-items='@Model.Departments.ToSelectListItem(1, "City")'></select>
-                        </div>
-                    </div>
-                    <div class="form_tile">
-                        <label for="">When do you want to rent a car?</label>
-                        <div class="rent_date">
-                            <div class="date">
-                                @{
-                                    var tday = DateTime.Now.ToString("yyyy-MM-dd");
-                                }
-                                <input type="date" asp-for="@Model.IndexVM.RentSince" value="@tday">
-                                <div class="date_overlay">
-                                    
-                                </div>
-                            </div>
-                            <div class="dots">
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                            </div>
-                            <div class="date">
-                                <input type="date" asp-for="@Model.IndexVM.RentTo" value="@tday">
-                                <div class="date_overlay">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div class="_carousel">
+    <div class="carousel_overlay">
+        <strong></strong>
+    </div>
+    <div class="owl-carousel owl-theme">
+    @foreach (var item in Model.Cars)
+    {
+        <div style="position: relative">
+            <img src='@item.Item2.Replace("wwwroot/", "")'>
+            <div class="slider_item_overlay">
+                <div class="brand_logo">
+                    <img src='/imgs/brands/@String.Concat(item.Item1.Brand.Name, ".png")'>
                 </div>
-                <div class="form_btns">
-                    <input type="submit" class="allcars" value="Show offers">
-                    <a href="Offer" class="allcars">Show all cars</a>
+                <div class="sio_inner">
+                    <p>@item.Item1.Brand.Name @item.Item1.Model</p>
+                    <p>Available now.</p>
+                    <a asp-action="Car" asp-route-Id="@item.Item1.Id">Check rental details.</a>
                 </div>
-            </form>
-        </main>
-        <div class="_carousel">
-            <div class="carousel_overlay">
-                <strong></strong>
-            </div>
-            <div class="owl-carousel owl-theme">
-            @foreach (var item in Model.Cars)
-            {
-                <div style="position: relative">
-                    <img src='@item.Item2.Replace("wwwroot/", "")'>
-                    <div class="slider_item_overlay">
-                        <div class="brand_logo">
-                            <img src='/imgs/brands/@String.Concat(item.Item1.Brand.Name, ".png")'>
-                        </div>
-                        <div class="sio_inner">
-                            <p>@item.Item1.Brand.Name @item.Item1.Model</p>
-                            <p>Available now.</p>
-                            <a asp-action="Car" asp-route-Id="@item.Item1.Id">Check rental details.</a>
-                        </div>
-                    </div>
-                </div>
-            }
             </div>
         </div>
+    }
     </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/OwlCarousel2/dist/owl.carousel.min.js"></script>
-    <script src="~/js/site.js"></script>
-</body>
-</html>
+</div>
+

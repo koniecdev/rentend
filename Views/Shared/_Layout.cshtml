@@ -1,1 +1,26 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rentend - Car Rental Service</title>
+    <link rel="stylesheet" href="~/lib/OwlCarousel2/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/global.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
+</head>
+<body>
+    <div class="_container">
+        <main>
+            <header>
+                <img src="~/imgs/logo.png" class="logo" alt="">
+                <h1>Car rental service</h1>
+            </header>
+            @await Component.InvokeAsync("CarSearchForm")
+        </main>
+        @RenderBody()
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/OwlCarousel2/dist/owl.carousel.min.js"></script>
+    <script src="~/js/site.js"></script>
+</body>
+</html>
